@@ -2,7 +2,7 @@
     "name": "echosong/wxpayface",
     "description": "wxpayface composer",
     "type": "library",
-    "license": "MT",
+    "license": "MIT",
     "minimum-stability": "stable",
     "autoload": {
         "psr-4": {
