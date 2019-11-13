@@ -22,7 +22,24 @@ use Echosong\WxpayFace\WxPayConfigInterface;
 
 class WxPayConfig extends WxPayConfigInterface
 {
-	//=======【基本信息设置】=====================================
+    public function __construct ($appid, $mchid, $key, $noticeUrl, $secret) {
+        $this->appid = $appid;
+        $this->mchid = $mchid;
+        $this->key = $key;
+        $this->secret = $secret;
+    }
+
+    private $appid;
+
+    private $mchid;
+
+    private $key;
+
+    private  $noticeUrl;
+
+    private $secret;
+
+    //=======【基本信息设置】=====================================
 	/**
 	 * TODO: 修改这里配置为您自己申请的商户信息
 	 * 微信公众号信息配置
@@ -34,11 +51,12 @@ class WxPayConfig extends WxPayConfigInterface
 	 */
 	public function GetAppId()
 	{
-		return 'wx2b029c08a6232582';
+		return  $this->appid;
 	}
+
 	public function GetMerchantId()
 	{
-		return '1900007081';
+		return  $this->mchid;
 	}
 	
 	//=======【支付相关配置：支付成功回调地址/签名方式】===================================
@@ -48,7 +66,7 @@ class WxPayConfig extends WxPayConfigInterface
 	**/
 	public function GetNotifyUrl()
 	{
-		return "";
+		return $this->noticeUrl;
 	}
 	public function GetSignType()
 	{
@@ -98,7 +116,7 @@ class WxPayConfig extends WxPayConfigInterface
 	}
 	public function GetAppSecret()
 	{
-		return '';
+		return $this->secret;
 	}
 
 

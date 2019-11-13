@@ -4,6 +4,12 @@
     "type": "library",
     "license": "MIT",
     "minimum-stability": "stable",
+    "authors": [
+        {
+            "name": "E.S",
+            "email": "313690636@qq.com"
+        }
+    ],
     "autoload": {
         "psr-4": {
             "Echosong\\WxpayFace\\": "src/"
