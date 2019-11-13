@@ -3,7 +3,6 @@
     "description": "微信刷脸支付，刷脸支付服务端 sdk 官方改造",
     "type": "library",
     "license": "MIT",
-    "minimum-stability": "stable",
     "authors": [
         {
             "name": "E.S",
