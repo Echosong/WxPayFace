@@ -22,7 +22,7 @@ use Echosong\WxpayFace\WxPayConfigInterface;
 
 class WxPayConfig extends WxPayConfigInterface
 {
-    public function __construct ($appid, $mchid, $key, $noticeUrl, $secret) {
+    public function __construct ($appid='', $mchid='', $key='', $noticeUrl='', $secret='') {
         $this->appid = $appid;
         $this->mchid = $mchid;
         $this->key = $key;
