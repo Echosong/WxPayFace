@@ -1,0 +1,13 @@
+{
+    "name": "echosong/wxpayface",
+    "description": "wxpayface composer",
+    "type": "library",
+    "license": "MT",
+    "minimum-stability": "stable",
+    "autoload": {
+        "psr-4": {
+            "Echosong\\WxpayFace\\": "src/"
+        }
+    },
+    "require": {}
+}
