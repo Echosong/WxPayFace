@@ -22,11 +22,12 @@ use Echosong\WxpayFace\WxPayConfigInterface;
 
 class WxPayConfig extends WxPayConfigInterface
 {
-    public function __construct ($appid='', $mchid='', $key='', $noticeUrl='', $secret='') {
-        $this->appid = $appid;
-        $this->mchid = $mchid;
-        $this->key = $key;
-        $this->secret = $secret;
+    //$appid='', $mchid='', $key='',$secret='', $noticeUrl=''
+    public function __construct ($config=[]) {
+        $this->appid = $config['appid'];
+        $this->mchid = $config['mchid'] ;
+        $this->key = $config['key'];
+        $this->secret = $config['secret'];
     }
 
     private $appid;
@@ -112,7 +113,7 @@ class WxPayConfig extends WxPayConfigInterface
 	 */
 	public function GetKey()
 	{
-		return 'renlianzhifu45879576894859307652';
+		return  $this->key;
 	}
 	public function GetAppSecret()
 	{

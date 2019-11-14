@@ -13,15 +13,6 @@ class WxPayDataBase
 {
 	protected $values = array();
 
-	/**
-	* 设置签名，详见签名生成算法类型
-	* @param string $value 
-	**/
-	public function SetSignType($sign_type)
-	{
-		$this->values['sign_type'] = $sign_type;
-		return $sign_type;
-	}
 
 	/**
 	* 设置签名，详见签名生成算法

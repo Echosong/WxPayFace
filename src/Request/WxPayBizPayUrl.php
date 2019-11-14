@@ -37,6 +37,8 @@ class WxPayBizPayUrl extends WxPayDataBaseSignMd5
     {
         return $this->values['appid'];
     }
+
+
     /**
      * 判断微信分配的公众账号ID是否存在
      * @return true 或 false

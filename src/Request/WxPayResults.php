@@ -113,8 +113,8 @@ class WxPayResults extends WxPayDataBase
             foreach ($obj->values as $key => $value) {
                 #除了return_code和return_msg之外其他的参数存在，则报错
                 if($key != "return_code" && $key != "return_msg"){
-                    throw new \Exception("输入数据存在异常！");
-                    return false;
+                    //throw new \Exception("输入数据存在异常！");
+                    //return false;
                 }
             }
             return $obj->GetValues();

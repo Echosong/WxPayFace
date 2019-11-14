@@ -2,9 +2,13 @@
 namespace  Echosong\WxpayFace;
 
 
+use Echosong\WxpayFace\Request\WxPayAuthInfo;
+use Echosong\WxpayFace\Request\WxPayFacePay;
 use Echosong\WxpayFace\WxPayException;
 use Echosong\WxpayFace\WxPayConfigInterface;
 use Echosong\WxpayFace\WxPayDataBase;
+use  Echosong\WxpayFace\Request\WxPayReport;
+use Echosong\WxpayFace\Request\WxPayResults;
 
 /**
  * 
@@ -15,9 +19,27 @@ use Echosong\WxpayFace\WxPayDataBase;
  */
 class WxPayApi
 {
-    public static function authInfo($config, $inputObj, $timout=6){
-        return ['code'=>1, 'message'=>'你好朋友'];
+    /**
+     * authinfo 授权 获取基本信息
+     * @param WxPayConfig $config
+     * @param WxPayAuthInfo $inputObj
+     * @param int $timeOut
+     * @return array|bool
+     */
+    public static function authInfo(WxPayConfig $config, WxPayAuthInfo $inputObj, $timeOut=6){
+        $inputObj->SetSignType($config->GetSignType());
+        $inputObj->SetAppid($config->GetAppId());
+        $inputObj->SetMch_id($config->GetMerchantId());
+        $inputObj->setNonceStr(self::getNonceStr());
+        $inputObj->SetNow();
+        $inputObj->SetSign($config);
+        $xml = $inputObj->ToXml();
+        $url = 'https://payapp.weixin.qq.com/face/get_wxpayface_authinfo';
+        $response = self::postXmlCurl($config, $xml, $url, false, $timeOut);
+        $result = $inputObj->FromXml($response);
+        return $result;
     }
+
 
 	/**
 	 * 
@@ -29,7 +51,7 @@ class WxPayApi
 	 * @throws WxPayException
 	 * @return 成功时返回，其他抛异常
 	 */
-	public static function unifiedOrder($config, $inputObj, $timeOut = 6)
+	public static function unifiedOrder($config, WxPayDataBase $inputObj, $timeOut = 6)
 	{
 		$url = "https://api.mch.weixin.qq.com/pay/unifiedorder";
 		//检测必填参数
@@ -42,7 +64,6 @@ class WxPayApi
 		}else if(!$inputObj->IsTrade_typeSet()) {
 			throw new \Exception("缺少统一支付接口必填参数trade_type！");
 		}
-		
 		//关联参数
 		if($inputObj->GetTrade_type() == "JSAPI" && !$inputObj->IsOpenidSet()){
 			throw new \Exception("统一支付接口中，缺少必填参数openid！trade_type为JSAPI时，openid为必填参数！");
@@ -244,6 +265,43 @@ class WxPayApi
 		}
 		return $response;
 	}
+
+
+    /**
+     * 提交刷脸支付API
+     * 收银员使用扫码设备读取微信用户刷卡授权码以后，二维码或条码信息传送至商户收银台，
+     * 由商户收银台或者商户后台调用该接口发起支付。
+     * WxPayWxPayMicroPay中body、out_trade_no、total_fee、auth_code参数必填
+     * appid、mchid、spbill_create_ip、nonce_str不需要填入
+     * @param WxPayConfigInterface $config  配置对象
+     * @param WxPayWxPayMicroPay $inputObj
+     * @param int $timeOut
+     */
+    public static function facepay($config,WxPayFacePay $inputObj, $timeOut = 10)
+    {
+        $url = "https://api.mch.weixin.qq.com/pay/facepay";
+        //检测必填参数
+        if(!$inputObj->IsBodySet()) {
+            throw new \Exception("提交被扫支付API接口中，缺少必填参数body！");
+        } else if(!$inputObj->IsOut_trade_noSet()) {
+            throw new \Exception("提交被扫支付API接口中，缺少必填参数out_trade_no！");
+        } else if(!$inputObj->IsTotal_feeSet()) {
+            throw new \Exception("提交被扫支付API接口中，缺少必填参数total_fee！");
+        } else if(!$inputObj->IsFace_codeSet()) {
+            throw new \Exception("提交被扫支付API接口中，缺少必填参数face_code！");
+        }
+
+        $inputObj->SetSpbill_create_ip($_SERVER['REMOTE_ADDR']);//终端ip
+        $inputObj->SetAppid($config->GetAppId());//公众账号ID
+        $inputObj->SetMch_id($config->GetMerchantId());//商户号
+        $inputObj->SetNonce_str(self::getNonceStr());//随机字符串
+
+        $inputObj->SetSign($config);//签名
+        $xml = $inputObj->ToXml();
+        $response = self::postXmlCurl($config, $xml, $url, false, $timeOut);
+        $result = $inputObj->FromXml($response);
+        return $result;
+    }
 	
 	/**
 	 * 提交被扫支付API
@@ -405,7 +463,7 @@ class WxPayApi
 		$inputObj->SetAppid($config->GetAppId());//公众账号ID
 		$inputObj->SetMch_id($config->GetMerchantId());//商户号
 		$inputObj->SetNonce_str(self::getNonceStr());//随机字符串
-		
+
 		$inputObj->SetSign($config);//签名
 		$xml = $inputObj->ToXml();
 		

@@ -183,6 +183,15 @@ class WxPayRefund extends WxPayDataBase
     {
         $this->values['out_refund_no'] = $value;
     }
+
+    /**
+     * 设置签名方式
+     * @param $value
+     */
+    public function SetSignType($value){
+        $this->values['sign_type'] = $value;
+    }
+
     /**
      * 获取商户系统内部的退款单号，商户系统内部唯一，同一退款单号多次请求只退一笔的值
      * @return 值
