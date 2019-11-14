@@ -9,7 +9,7 @@ use Echosong\WxpayFace\Request;
 
 $WxPayConfig = new WxpayFace\WxPayConfig();
 
-/***************获取authinfo****************/
+/***************获取authinfo 具体参数参考官方文档****************/
 $request = new Request\WxPayAuthInfo(App::payConfig());
 $request->SetRawdata($rawdata);
 $request->setName('测试');
@@ -18,9 +18,9 @@ $request->setDeviceId('test0002');
 $result = WxpayFace\WxPayApi::authInfo($request, $WxPayConfig);
 print_r($result) ;
 
-/***************提交人脸支付****************/
+/***************提交人脸支付 具体参数参考官方文档文档****************/
 $request = new Request\WxPayFacePay(App::payConfig());
-$request->SetDevice_info($deviceno);
+$request->SetDevice_info('***');
 $request->SetBody("测试人脸支付一笔订单");
 $request->SetDetail('测试支付商品');
 $request->SetAttach('原样返回数据');
