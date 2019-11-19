@@ -290,14 +290,13 @@ class WxPayApi
         } else if(!$inputObj->IsFace_codeSet()) {
             throw new \Exception("提交被扫支付API接口中，缺少必填参数face_code！");
         }
-
-        $inputObj->SetSpbill_create_ip($_SERVER['REMOTE_ADDR']);//终端ip
         $inputObj->SetAppid($config->GetAppId());//公众账号ID
         $inputObj->SetMch_id($config->GetMerchantId());//商户号
         $inputObj->SetNonce_str(self::getNonceStr());//随机字符串
 
         $inputObj->SetSign($config);//签名
         $xml = $inputObj->ToXml();
+
         $response = self::postXmlCurl($config, $xml, $url, false, $timeOut);
         $result = $inputObj->FromXml($response);
         return $result;

@@ -44,6 +44,21 @@ class WxPayAuthInfo extends WxPayDataBase
         $this->values['sign_type'] = $sign_type;
         return $sign_type;
     }
+    /**
+     * 子商户
+     * @param $value
+     */
+    public function SetSub_mch_id($value){
+        $this->values['sub_mch_id'] = $value;
+    }
+
+    /**
+     * 获取子商户
+     * @return mixed
+     */
+    public function GetSub_mch_id(){
+        return $this->values['sub_mch_id'];
+    }
 
 
     public function setName ($value) {

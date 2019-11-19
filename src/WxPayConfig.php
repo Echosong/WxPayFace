@@ -69,6 +69,7 @@ class WxPayConfig extends WxPayConfigInterface
 	{
 		return $this->noticeUrl;
 	}
+
 	public function GetSignType()
 	{
 		return "MD5";
