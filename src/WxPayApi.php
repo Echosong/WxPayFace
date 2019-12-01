@@ -85,6 +85,7 @@ class WxPayApi
 		//签名
 		$inputObj->SetSign($config);
 		$xml = $inputObj->ToXml();
+
 		
 		$startTimeStamp = self::getMillisecond();//请求开始时间
 		$response = self::postXmlCurl($config, $xml, $url, false, $timeOut);
@@ -290,13 +291,15 @@ class WxPayApi
         } else if(!$inputObj->IsFace_codeSet()) {
             throw new \Exception("提交被扫支付API接口中，缺少必填参数face_code！");
         }
+
+        $inputObj->SetSpbill_create_ip($_SERVER['REMOTE_ADDR']);//终端ip
         $inputObj->SetAppid($config->GetAppId());//公众账号ID
         $inputObj->SetMch_id($config->GetMerchantId());//商户号
         $inputObj->SetNonce_str(self::getNonceStr());//随机字符串
 
         $inputObj->SetSign($config);//签名
         $xml = $inputObj->ToXml();
-
+        //var_dump($xml);
         $response = self::postXmlCurl($config, $xml, $url, false, $timeOut);
         $result = $inputObj->FromXml($response);
         return $result;
@@ -337,8 +340,8 @@ class WxPayApi
 		$startTimeStamp = self::getMillisecond();//请求开始时间
 		$response = self::postXmlCurl($config, $xml, $url, false, $timeOut);
 		$result = WxPayResults::Init($config, $response);
-		self::reportCostTime($config, $url, $startTimeStamp, $result);//上报请求花费时间
-		
+		//self::reportCostTime($config, $url, $startTimeStamp, $result);//上报请求花费时间
+        $result = $inputObj->FromXml($response);
 		return $result;
 	}
 	

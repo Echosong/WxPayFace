@@ -80,7 +80,7 @@ class WxPayFacePay extends WxPayDataBase
     {
         return array_key_exists('mch_id', $this->values);
     }
-
+    
     /**
      * 子商户
      * @param $value
@@ -96,6 +96,7 @@ class WxPayFacePay extends WxPayDataBase
     public function GetSub_mch_id(){
         return $this->values['sub_mch_id'];
     }
+
 
     /**
      * 设置终端设备号(商户自定义，如门店编号)

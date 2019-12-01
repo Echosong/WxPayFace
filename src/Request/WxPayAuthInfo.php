@@ -44,7 +44,21 @@ class WxPayAuthInfo extends WxPayDataBase
         $this->values['sign_type'] = $sign_type;
         return $sign_type;
     }
-    /**
+
+
+    public function setName ($value) {
+        $this->values['store_name'] = $value;
+    }
+
+    public function setDeviceId ($value) {
+        $this->values['device_id'] = $value;
+    }
+
+    public function setStoreId($value){
+        $this->values['store_id'] = $value;
+    }
+
+ /**
      * 子商户
      * @param $value
      */
@@ -60,18 +74,6 @@ class WxPayAuthInfo extends WxPayDataBase
         return $this->values['sub_mch_id'];
     }
 
-
-    public function setName ($value) {
-        $this->values['store_name'] = $value;
-    }
-
-    public function setDeviceId ($value) {
-        $this->values['device_id'] = $value;
-    }
-
-    public function setStoreId($value){
-        $this->values['store_id'] = $value;
-    }
 
     /**
      * @param $value WxPayApi::getNonceStr()

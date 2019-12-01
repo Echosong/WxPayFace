@@ -61,9 +61,8 @@ class WxPayMicroPay extends WxPayDataBase
     {
         return $this->values['mch_id'];
     }
-
-
-    /**
+    
+     /**
      * 子商户
      * @param $value
      */
@@ -78,8 +77,8 @@ class WxPayMicroPay extends WxPayDataBase
     public function GetSub_mch_id(){
         return $this->values['sub_mch_id'];
     }
-
-    /**
+    
+     /**
      * 设置签名，详见签名生成算法类型
      * @param string $value
      **/
@@ -88,8 +87,7 @@ class WxPayMicroPay extends WxPayDataBase
         $this->values['sign_type'] = $sign_type;
         return $sign_type;
     }
-
-
+    
     /**
      * 判断微信支付分配的商户号是否存在
      * @return true 或 false
